@@ -1,4 +1,4 @@
 package com.example.CotizadorMoneda.dto;
 
-public record MonedaConversionDto(String nombre, String cambio, String monto) {
+public record MonedaConversionDto(String nombre, String valor, String monto) {
 }
