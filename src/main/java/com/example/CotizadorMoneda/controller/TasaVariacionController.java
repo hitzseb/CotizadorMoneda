@@ -22,7 +22,7 @@ public class TasaVariacionController {
 	private final String EMPTY_PARAM = "Alguno de los parametros esta vacio";
 	private final String INVALID_PARAM = "Alguno de los parametros es invalido";
 	
-	@GetMapping("/tasa-variacion")
+	@GetMapping("/variacion")
 	public ResponseEntity<?> tasaVariacion(@RequestParam("id") Optional<Long> monedaId) {
 		if (!monedaId.isPresent()) {
 			return CustomResponseEntity.getResponseError(EMPTY_PARAM, HttpStatus.BAD_REQUEST);
