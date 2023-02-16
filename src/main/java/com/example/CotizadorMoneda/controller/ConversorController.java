@@ -27,6 +27,7 @@ public class ConversorController {
 	public ResponseEntity<?> compraMoneda(@RequestParam("mercado") Optional<Long> mercadoId,
 			@RequestParam("from") Optional<Long> monedaFromId, @RequestParam("to") Optional<Long> monedaToId,
 			@RequestParam("monto") Optional<Double> monto) {
+		
 		if (!(mercadoId.isPresent() && monedaFromId.isPresent() && monedaToId.isPresent() && monto.isPresent())) {
 			return CustomResponseEntity.getResponseError(EMPTY_PARAM, HttpStatus.BAD_REQUEST);
 		}
@@ -38,15 +39,18 @@ public class ConversorController {
 		} catch (Exception e) {
 			return CustomResponseEntity.getResponseError(INVALID_PARAM, HttpStatus.BAD_REQUEST);
 		}
+		
 	}
 
 	@GetMapping("/venta")
 	public ResponseEntity<?> vendeMoneda(@RequestParam("mercado") Optional<Long> mercado,
 			@RequestParam("from") Optional<Long> monedaFromId, @RequestParam("to") Optional<Long> monedaToId,
 			@RequestParam("monto") Optional<Double> monto) {
+		
 		if (!(mercado.isPresent() && monedaFromId.isPresent() && monedaToId.isPresent() && monto.isPresent())) {
 			return CustomResponseEntity.getResponseError(EMPTY_PARAM, HttpStatus.BAD_REQUEST);
 		}
+		
 		try {
 			ConversionResponse conversionResponse = conversorService.convertirMoneda(Operacion.VENTA, mercado.get(),
 					monedaFromId.get(), monedaToId.get(), monto.get());
@@ -54,6 +58,7 @@ public class ConversorController {
 		} catch (Exception e) {
 			return CustomResponseEntity.getResponseError(INVALID_PARAM, HttpStatus.BAD_REQUEST);
 		}
+		
 	}
 
 }

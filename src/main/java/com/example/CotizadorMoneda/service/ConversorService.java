@@ -19,30 +19,38 @@ public class ConversorService {
 	@Autowired
 	ValorService valorService;
 
+//	Conversion = valor de cambio de monedaFrom en mercado * monto / valor de cambio de monedaTo en mercado
+//	El valor de cambio varia segun sea compra o venta
+
+//	Los resultados van a parar a DTOs que representan monedas con atributos String:
+//	nombre, simbolo de la moneda de cambio del mercado + valor de cambio, simbolo de la moneda de cambio del mercado + conversion
+	
+//	La respuesta final esta compuesta por ambos DTOs
+
 	public ConversionResponse convertirMoneda(Operacion operacion, Long mercadoId, Long monedaFromId, Long monedaToId,
 			double monto) {
 
 		Mercado mercado = mercadoService.findMercadoById(mercadoId);
 		Moneda monedaMercado = monedaService.findMonedaById(mercado.getMoneda());
 		String simboloMercado = monedaMercado.getSimbolo();
-		
+
 		Moneda monedaFrom = monedaService.findMonedaById(monedaFromId);
 		String nombreFrom = monedaFrom.getNombre();
 		String simboloFrom = monedaFrom.getSimbolo();
-		
-		double valorFrom=0;
-		
+
+		double valorFrom = 0;
+
 		if (mercado.getMoneda() == monedaFromId) {
 			valorFrom = 1;
+		} else {
+			if (operacion == Operacion.COMPRA) {
+				valorFrom = valorService.findValorByMonedaAndMercado(monedaFromId, mercadoId).getCompra();
+			}
+			if (operacion == Operacion.VENTA) {
+				valorFrom = valorService.findValorByMonedaAndMercado(monedaFromId, mercadoId).getVenta();
+			}
 		}
-		
-		if (mercado.getMoneda() != monedaFromId && operacion == Operacion.COMPRA) {
-			valorFrom = valorService.findValorByMonedaAndMercado(monedaFromId, mercadoId).getCompra();
-		}
-		if (mercado.getMoneda() != monedaFromId && operacion == Operacion.VENTA) {
-			valorFrom = valorService.findValorByMonedaAndMercado(monedaFromId, mercadoId).getVenta();
-		}
-		
+
 		double conversionFrom = monto * valorFrom;
 
 		MonedaConversionDto monedaFromDto = new MonedaConversionDto(nombreFrom, simboloMercado + valorFrom,
@@ -52,21 +60,22 @@ public class ConversorService {
 		String nombreTo = monedaTo.getNombre();
 		String simboloTo = monedaTo.getSimbolo();
 		double valorTo = 0;
-		
+
 		if (mercado.getMoneda() == monedaToId) {
 			valorTo = 1;
-		}
-		
-		if (mercado.getMoneda() != monedaToId && operacion == Operacion.COMPRA) {
-			valorTo = valorService.findValorByMonedaAndMercado(monedaToId, mercadoId).getCompra();
-		}
-		if (mercado.getMoneda() != monedaToId && operacion == Operacion.VENTA) {
-			valorTo = valorService.findValorByMonedaAndMercado(monedaToId, mercadoId).getVenta();
+		} else {
+			if (operacion == Operacion.COMPRA) {
+				valorTo = valorService.findValorByMonedaAndMercado(monedaToId, mercadoId).getCompra();
+			}
+			if (operacion == Operacion.VENTA) {
+				valorTo = valorService.findValorByMonedaAndMercado(monedaToId, mercadoId).getVenta();
+			}
 		}
 
 		double conversionTo = conversionFrom / valorTo;
 
-		MonedaConversionDto monedaToDto = new MonedaConversionDto(nombreTo, simboloMercado + valorTo, simboloTo + conversionTo);
+		MonedaConversionDto monedaToDto = new MonedaConversionDto(nombreTo, simboloMercado + valorTo,
+				simboloTo + conversionTo);
 
 		ConversionResponse compraResponse = new ConversionResponse(monedaFromDto, monedaToDto);
 		return compraResponse;
