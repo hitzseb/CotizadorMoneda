@@ -16,15 +16,15 @@ public class ValorService {
 	JdbcTemplate jdbcTemplate;
 	
 	@SuppressWarnings("deprecation")
-	public Valor findValorByMonedaId(Long monedaId) {
-		String SQL_QUERY = "SELECT * FROM VALORES WHERE MONEDA=? AND ACTIVO=TRUE;";
-		return jdbcTemplate.queryForObject(SQL_QUERY, new Object[] { monedaId }, new ValorMapper());
+	public Valor findValorByMonedaAndMercado(Long monedaId, Long mercadoId) {
+		String SQL_QUERY = "SELECT * FROM VALORES WHERE MONEDA=? AND MERCADO=? AND ACTIVO=TRUE;";
+		return jdbcTemplate.queryForObject(SQL_QUERY, new Object[] { monedaId, mercadoId }, new ValorMapper());
 	}
 
 	@SuppressWarnings("deprecation")
-	public List<Valor> findValoresByMonedaId(Long monedaId) {
-		String SQL_QUERY = "SELECT * FROM VALORES WHERE MONEDA=? ORDER BY FECHA;";
-		return jdbcTemplate.query(SQL_QUERY, new Object[] { monedaId }, new ValorMapper());
+	public List<Valor> findValoresByMonedaAndMercado(Long monedaId, Long mercadoId) {
+		String SQL_QUERY = "SELECT * FROM VALORES WHERE MONEDA=? AND MERCADO=? ORDER BY FECHA;";
+		return jdbcTemplate.query(SQL_QUERY, new Object[] { monedaId, mercadoId }, new ValorMapper());
 	}
 
 }

@@ -11,7 +11,8 @@ public class ValorMapper implements RowMapper<Valor> {
 
 	@Override
 	public Valor mapRow(ResultSet rs, int rowNum) throws SQLException {
-		Valor valor = new Valor(rs.getLong(1), rs.getLong(2), rs.getBoolean(3), rs.getDouble(4), rs.getDouble(5), rs.getDate(6));
+		Valor valor = new Valor(rs.getLong(1), rs.getLong(2), rs.getLong(3), rs.getBoolean(4), rs.getDouble(5),
+				rs.getDouble(6), rs.getDate(7));
 		return valor;
 	}
 

@@ -17,9 +17,15 @@ public class ValorController {
 	@Autowired
 	ValorService valorService;
 	
+	@GetMapping("valor")
+	public ResponseEntity<?> getValor(@RequestParam("moneda") Long monedaId, @RequestParam("mercado") Long mercadoId) {
+		Valor valor = valorService.findValorByMonedaAndMercado(monedaId, mercadoId);
+		return ResponseEntity.ok(valor);
+	}
+	
 	@GetMapping("valores")
-	public ResponseEntity<?> getValoresByMoneda(@RequestParam Long id) {
-		List<Valor> valores = valorService.findValoresByMonedaId(id);
+	public ResponseEntity<?> getValores(@RequestParam("moneda") Long monedaId, @RequestParam("mercado") Long mercadoId) {
+		List<Valor> valores = valorService.findValoresByMonedaAndMercado(monedaId, mercadoId);
 		return ResponseEntity.ok(valores);
 	}
 

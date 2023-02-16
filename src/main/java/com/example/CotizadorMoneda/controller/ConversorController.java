@@ -24,14 +24,16 @@ public class ConversorController {
 	private final String INVALID_PARAM = "Alguno de los parametros es invalido";
 
 	@GetMapping("/compra")
-	public ResponseEntity<?> compraMoneda(@RequestParam("monto") Optional<Double> monto,
-			@RequestParam("from") Optional<Long> monedaFromId, @RequestParam("to") Optional<Long> monedaToId) {
-		if (!(monto.isPresent() && monedaFromId.isPresent() && monedaToId.isPresent())) {
+	public ResponseEntity<?> compraMoneda(@RequestParam("mercado") Optional<Long> mercadoId,
+			@RequestParam("from") Optional<Long> monedaFromId, @RequestParam("to") Optional<Long> monedaToId,
+			@RequestParam("monto") Optional<Double> monto) {
+		if (!(mercadoId.isPresent() && monedaFromId.isPresent() && monedaToId.isPresent() && monto.isPresent())) {
 			return CustomResponseEntity.getResponseError(EMPTY_PARAM, HttpStatus.BAD_REQUEST);
 		}
+		
 		try {
-			ConversionResponse compraResponse = conversorService.convertirMoneda(Operacion.COMPRA, monto.get(),
-					monedaFromId.get(), monedaToId.get());
+			ConversionResponse compraResponse = conversorService.convertirMoneda(Operacion.COMPRA, mercadoId.get(),
+					monedaFromId.get(), monedaToId.get(), monto.get());
 			return ResponseEntity.ok(compraResponse);
 		} catch (Exception e) {
 			return CustomResponseEntity.getResponseError(INVALID_PARAM, HttpStatus.BAD_REQUEST);
@@ -39,14 +41,15 @@ public class ConversorController {
 	}
 
 	@GetMapping("/venta")
-	public ResponseEntity<?> vendeMoneda(@RequestParam("monto") Optional<Double> monto,
-			@RequestParam("from") Optional<Long> monedaFromId, @RequestParam("to") Optional<Long> monedaToId) {
-		if (!(monto.isPresent() && monedaFromId.isPresent() && monedaToId.isPresent())) {
+	public ResponseEntity<?> vendeMoneda(@RequestParam("mercado") Optional<Long> mercado,
+			@RequestParam("from") Optional<Long> monedaFromId, @RequestParam("to") Optional<Long> monedaToId,
+			@RequestParam("monto") Optional<Double> monto) {
+		if (!(mercado.isPresent() && monedaFromId.isPresent() && monedaToId.isPresent() && monto.isPresent())) {
 			return CustomResponseEntity.getResponseError(EMPTY_PARAM, HttpStatus.BAD_REQUEST);
 		}
 		try {
-			ConversionResponse conversionResponse = conversorService.convertirMoneda(Operacion.VENTA, monto.get(),
-					monedaFromId.get(), monedaToId.get());
+			ConversionResponse conversionResponse = conversorService.convertirMoneda(Operacion.VENTA, mercado.get(),
+					monedaFromId.get(), monedaToId.get(), monto.get());
 			return ResponseEntity.ok(conversionResponse);
 		} catch (Exception e) {
 			return CustomResponseEntity.getResponseError(INVALID_PARAM, HttpStatus.BAD_REQUEST);

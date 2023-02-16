@@ -21,14 +21,15 @@ public class TasaVariacionController {
 
 	private final String EMPTY_PARAM = "Alguno de los parametros esta vacio";
 	private final String INVALID_PARAM = "Alguno de los parametros es invalido";
-	
+
 	@GetMapping("/variacion")
-	public ResponseEntity<?> tasaVariacion(@RequestParam("id") Optional<Long> monedaId) {
+	public ResponseEntity<?> tasaVariacion(@RequestParam("moneda") Optional<Long> monedaId,
+			@RequestParam("mercado") Optional<Long> mercadoId) {
 		if (!monedaId.isPresent()) {
 			return CustomResponseEntity.getResponseError(EMPTY_PARAM, HttpStatus.BAD_REQUEST);
-		}
+		}		
 		try {
-			VariacionResponse variacion = tasaVariacionService.getTasaDeVariacionByMonedaid(monedaId.get());
+			VariacionResponse variacion = tasaVariacionService.getTasaDeVariacion(monedaId.get(), mercadoId.get());
 			return ResponseEntity.ok(variacion);
 		} catch (Exception e) {
 			return CustomResponseEntity.getResponseError(INVALID_PARAM, HttpStatus.BAD_REQUEST);
