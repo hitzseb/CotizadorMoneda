@@ -59,7 +59,7 @@ public class TasaVariacionService {
 			for (int i = 0; i < valores.size()-1; i++) {
 			tasa += calcularTasaDeVariacion(valores.get(i), valores.get(i+1));
 			} 
-			return tasa / valores.size();
+			return tasa / (valores.size() - 1);
 		} else {
 			tasa = calcularTasaDeVariacion(valores.get(0), valores.get(1));
 			return tasa;
