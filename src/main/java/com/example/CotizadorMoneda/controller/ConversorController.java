@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.CotizadorMoneda.response.CustomResponseEntity;
-import com.example.CotizadorMoneda.model.Operacion;
+import com.example.CotizadorMoneda.enums.Operacion;
 import com.example.CotizadorMoneda.response.ConversionResponse;
 import com.example.CotizadorMoneda.service.ConversorService;
 

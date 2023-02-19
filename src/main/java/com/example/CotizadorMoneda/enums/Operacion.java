@@ -1,4 +1,4 @@
-package com.example.CotizadorMoneda.model;
+package com.example.CotizadorMoneda.enums;
 
 public enum Operacion {
 

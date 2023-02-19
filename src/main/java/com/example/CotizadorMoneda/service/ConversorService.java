@@ -4,9 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.CotizadorMoneda.dto.MonedaConversionDto;
+import com.example.CotizadorMoneda.enums.Operacion;
 import com.example.CotizadorMoneda.model.Mercado;
 import com.example.CotizadorMoneda.model.Moneda;
-import com.example.CotizadorMoneda.model.Operacion;
 import com.example.CotizadorMoneda.response.ConversionResponse;
 
 @Service
