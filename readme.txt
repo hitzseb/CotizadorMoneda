@@ -15,3 +15,5 @@ http://localhost:8080/variacion-historica?moneda=1&mercado=1
 http://localhost:8080/variacion-historica?moneda=2&mercado=1
 
 http://localhost:8080/variacion-historica?moneda=3&mercado=1
+
+http://localhost:8080/purchase?market=1&from=2&to=3&amount=100
